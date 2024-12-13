@@ -30,7 +30,8 @@ import com.example.firstapplicationp3.ui.theme.FirstApplicationP3Theme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // enableEdgeToEdge()
+        // enableEdgeToEdge() // Commented out, potentially for edge-to-edge display
+        // Set the content of the screen using Jetpack Compose
         setContent {
             ToDoApp2_UI()
         }
@@ -39,31 +40,45 @@ class MainActivity : ComponentActivity() {
     @Preview(showBackground = true, showSystemUi = true)
     @Composable
     fun ToDoApp2_UI() {
-
+        // State variable to hold the user's input for a new to-do item
         var input by remember { mutableStateOf("") }
-        var list: MutableList<String> = remember { mutableListOf("blah", "bleh") }
+        // List to store to-do items (initial items: "blah", "bleh")
+        // var list: MutableList<String> = remember { mutableListOf("blah", "bleh") } // Not used in current implementation
 
+        // Map to store to-do items and their completion status (initially false)
         var list_map: MutableMap<String, Boolean> = remember { mutableStateMapOf("blah" to false, "bleh" to false) }
 
+        // Main layout using a Column
         Column {
+            // LazyColumn to display to-do items efficiently
             LazyColumn(modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)) {
-                items(list_map.keys.toList()) {
-                    Row {
-                        Text(text = it)
+                .weight(1f)) { // Occupies most of the screen height
+                // Iterate through the keys of the list_map (to-do items)
+                items(list_map.keys.toList()) { item ->
+                    Row { // Display each item in a Row
+                        Text(text = item) // Display the to-do item text
+                        // Checkbox to mark items as complete
                         Checkbox(
-                            checked = list_map[it] == true,
-                            onCheckedChange = { value -> list_map[it] = value })
+                            checked = list_map[item] == true, // Checked if the item is marked as true in the map
+                            onCheckedChange = { value -> list_map[item] = value } // Update completion status in the map
+                        )
                     }
                 }
             }
 
+            // Row for input field and add button
             Row {
-                TextField(value = input, onValueChange = { newValue -> input = newValue }, label = { Text(text = "todo") })
+                // TextField for user input
+                TextField(
+                    value = input,
+                    onValueChange = { newValue -> input = newValue }, // Update input state
+                    label = { Text(text = "todo") } // Label for the TextField
+                )
 
-                Button(onClick = { list_map.put(input, false) }) {
-                    Text(text = "+")
+                // Button to add a new to-do item
+                Button(onClick = { list_map.put(input, false) }) { // Add item to the map with initial status false
+                    Text(text = "+") // Button text
                 }
             }
         }
