@@ -1,4 +1,4 @@
-package com.example.firstapplicationp3
+package com.example.prog3experiments
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

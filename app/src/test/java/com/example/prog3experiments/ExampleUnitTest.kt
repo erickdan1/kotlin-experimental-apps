@@ -1,4 +1,4 @@
-package com.example.firstapplicationp3
+package com.example.prog3experiments
 
 import org.junit.Test
 
